@@ -12,10 +12,12 @@ import {
     ModalFooter,
     ModalBody,
     ModalCloseButton,
-    useDisclosure
+    useDisclosure,
+    useToast
 } from "@chakra-ui/react";
 
 import { createSite } from "@/lib/db";
+import { useAuth } from "@/lib/auth";
 
 const AddSiteModal = () => {
     const initialRef = useRef();
@@ -23,7 +25,25 @@ const AddSiteModal = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
     // const [result, setResult] = useState("");
     // const createSite = (data) => setResult(JSON.stringify(data));
-    const onCreateSite = (data) => createSite(data);
+    const toast = useToast();
+    const auth = useAuth();
+
+    const onCreateSite = ({name, url}) => {
+        createSite({
+            authorId: auth.user.uid,
+            createdAt: new Date().toISOString(),
+            name,
+            url
+        });
+        toast({
+            title: "Success!",
+            description: "We've added your site.",
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+          });
+        onClose();
+    };
   
     return (
       <>
@@ -49,8 +69,8 @@ const AddSiteModal = () => {
     
                     <FormControl mb={4}>
                         <FormLabel>Link</FormLabel>
-                        <input {...register("link", { required: true, minLength: 3 })} placeholder="https://website.com" mr={1} />
-                        {errors.link?.type === 'required' && "Link is required"}
+                        <input {...register("url", { required: true, minLength: 3 })} placeholder="https://website.com" mr={1} />
+                        {errors.url?.type === 'required' && "Link is required"}
                     </FormControl>
 
                     {/* <FormControl>
