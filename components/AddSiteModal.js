@@ -13,7 +13,9 @@ import {
     ModalBody,
     ModalCloseButton,
     useDisclosure
-} from "@chakra-ui/react"
+} from "@chakra-ui/react";
+
+import { createSite } from "@/lib/db";
 
 const AddSiteModal = () => {
     const initialRef = useRef();
@@ -21,7 +23,7 @@ const AddSiteModal = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
     // const [result, setResult] = useState("");
     // const createSite = (data) => setResult(JSON.stringify(data));
-    const createSite = (data) => console.log(data);
+    const onCreateSite = (data) => createSite(data);
   
     return (
       <>
@@ -35,7 +37,7 @@ const AddSiteModal = () => {
           onClose={onClose}
         >
             <ModalOverlay />
-            <ModalContent as="form" onSubmit={handleSubmit(createSite)}>
+            <ModalContent as="form" onSubmit={handleSubmit(onCreateSite)}>
                 <ModalHeader fontWeight="bold">Add Site</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody pb={6}>
