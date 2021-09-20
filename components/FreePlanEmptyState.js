@@ -5,7 +5,6 @@ import {
     Box,
     Button,
 } from '@chakra-ui/react'
-import { CopyIcon } from '@chakra-ui/icons'
 
 import DashboardShell from './DashboardShell'
 

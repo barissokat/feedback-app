@@ -9,7 +9,6 @@ import {
     BreadcrumbLink,
     Heading,
 } from '@chakra-ui/react'
-import { CopyIcon } from '@chakra-ui/icons'
 
 import { auth } from 'firebase/app';
 import { useAuth } from '@/lib/auth';
