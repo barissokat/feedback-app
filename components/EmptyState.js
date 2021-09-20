@@ -24,9 +24,7 @@ const EmptyState = () => (
             <Heading as="h2" size="lg" mb={3}>
                 You haven't added any sites.
             </Heading>
-            <Button variant="solid" size="md" maxWidth="200px">
-                Add Your First Site
-            </Button>
+            <AddSiteModal />
             <Icon viewBox="0 0 200 200" color="red.500" name="logo" w="3em" h="4em">
                 <path
                     fill="currentColor"
