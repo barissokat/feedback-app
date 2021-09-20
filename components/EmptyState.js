@@ -22,7 +22,7 @@ const EmptyState = () => (
             paddingBottom="25%"
         >
             <Heading as="h2" size="lg" mb={3}>
-                You haven't added any sites.
+                You haven&apos;t added any sites.
             </Heading>
             <AddSiteModal />
             <Icon viewBox="0 0 200 200" color="red.500" name="logo" w="3em" h="4em">
