@@ -1,31 +1,30 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import styles from '@/styles/Home.module.css';
-import {
-    Box,
-    Button,
-    Code,
-    Flex,
-    Heading,
-    Icon,
-    Text,
-    Spacer,
-    Menu,
-    MenuButton,
-    MenuList,
-    MenuItem
-} from '@chakra-ui/react';
 
-import { auth } from 'firebase/app';
-import { useAuth } from '@/lib/auth';
+import DashboardShell from '@/components/DashboardShell';
 import EmptyState from '@/components/EmptyState';
+import fetcher from '@/utils/fetcher';
+import SiteTable from '@/components/SiteTable';
+import SiteTableSkeleton from '@/components/SiteTableSkeleton';
+import { useAuth } from '@/lib/auth';
+import useSWR from 'swr'
 
 export default function Dashboard() {
     const auth = useAuth();
+    const { data } = useSWR('/api/sites', fetcher);
 
-    if (!auth.user) {
-        return 'Loading...';
+    if (!data) {
+        return (
+            <DashboardShell>
+                <SiteTableSkeleton />
+            </DashboardShell>
+        );
     }
 
-    return <EmptyState />
+    return (
+        <DashboardShell>
+            {data.sites ? <SiteTable sites={data.sites} /> : <EmptyState />}
+        </DashboardShell>
+    );
 };

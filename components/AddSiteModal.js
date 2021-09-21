@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { mutate } from 'swr';
 
 import {
     Button,
@@ -19,36 +20,58 @@ import {
 import { createSite } from "@/lib/db";
 import { useAuth } from "@/lib/auth";
 
-const AddSiteModal = () => {
+const AddSiteModal = ({ children }) => {
     const initialRef = useRef();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { register, formState: { errors }, handleSubmit } = useForm();
     // const [result, setResult] = useState("");
     // const createSite = (data) => setResult(JSON.stringify(data));
-    const toast = useToast();
     const auth = useAuth();
+    const toast = useToast();
 
     const onCreateSite = ({name, url}) => {
-        createSite({
+        const newSite = {
             authorId: auth.user.uid,
             createdAt: new Date().toISOString(),
             name,
             url
-        });
+        };
+
+        createSite(newSite);
+
         toast({
             title: "Success!",
             description: "We've added your site.",
             status: "success",
             duration: 3000,
             isClosable: true,
-          });
+        });
+
+        mutate(
+            '/api/sites',
+            async (data) => {
+              return { sites: [...data.sites, newSite] };
+            },
+            false
+        );
+
         onClose();
     };
   
     return (
       <>
-        <Button variant="solid" size="md" maxWidth="200px" onClick={onOpen}>
-            Add Your First Site
+        <Button
+            onClick={onOpen}
+            backgroundColor="gray.900"
+            color="white"
+            fontWeight="medium"
+            _hover={{ bg: 'gray.700' }}
+            _active={{
+                bg: 'gray.800',
+                transform: 'scale(0.95)'
+            }}
+        >
+            {children}
         </Button>
   
         <Modal
@@ -72,10 +95,6 @@ const AddSiteModal = () => {
                         <input {...register("url", { required: true, minLength: 3 })} placeholder="https://website.com" mr={1} />
                         {errors.url?.type === 'required' && "Link is required"}
                     </FormControl>
-
-                    {/* <FormControl>
-                        {result}
-                    </FormControl>  */}
                 </ModalBody>
     
                 <ModalFooter>
