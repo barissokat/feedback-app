@@ -11,6 +11,7 @@ import {
     Link,
 } from '@chakra-ui/react'
 
+import AddSiteModal from './AddSiteModal';
 import { auth } from 'firebase/app';
 import { useAuth } from '@/lib/auth';
 
@@ -59,7 +60,10 @@ const DashboardShell = ({ children }) => {
                             <BreadcrumbLink color="gray.700">Sites</BreadcrumbLink>
                         </BreadcrumbItem>
                     </Breadcrumb>
-                    <Heading pb={4}>My Sites</Heading>
+                    <Flex justifyContent="space-between" mb={3} >
+                        <Heading pb={4}>My Sites</Heading>
+                        <AddSiteModal>+ Add Site</AddSiteModal>
+                    </Flex>
                     {children}
                 </Flex>
             </Flex>
