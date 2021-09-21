@@ -5,7 +5,8 @@ import {
     Box,
     Button,
     Icon,
-    Text,
+    Link,
+    Text
 } from '@chakra-ui/react';
 
 import { auth } from 'firebase/app';
@@ -22,9 +23,6 @@ export default function Home() {
             </Head>
 
             <main className={styles.main}>
-                <h1 className={styles.title}>
-                    Welcome to <a href="https://nextjs.org">Next</a> Feedback App
-                </h1>
                 <Icon viewBox="0 0 200 200" color="red.500" name="logo" w="3em" h="5em">
                     <path
                         fill="currentColor"
@@ -32,7 +30,7 @@ export default function Home() {
                     />
                 </Icon>
                 <Text>
-                    {auth.user ? auth.user.name : ''}
+                    {auth.user ? <Link href="/dashboard">{auth.user.name}</Link> : ''}
                 </Text>
                 <Box>
                     {auth.user ? (
