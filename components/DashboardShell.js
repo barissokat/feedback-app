@@ -1,20 +1,21 @@
 import React, { Children } from 'react'
 import {
-    Flex,
-    Icon,
-    Link,
     Avatar,
     Breadcrumb,
     BreadcrumbItem,
     BreadcrumbLink,
+    Button,
+    Flex,
     Heading,
+    Icon,
+    Link,
 } from '@chakra-ui/react'
 
 import { auth } from 'firebase/app';
 import { useAuth } from '@/lib/auth';
 
 const DashboardShell = ({ children }) => {
-    const auth = useAuth();
+    const { user, signout } = useAuth();
     
     return (
         <Flex flexDirection="column" height="100vh">
@@ -30,8 +31,12 @@ const DashboardShell = ({ children }) => {
                     <Link>Feedback</Link>
                 </Flex>
                 <Flex alignItems="center">
-                    <Link mr={4}>Account</Link>
-                    <Avatar src={auth.user.photoUrl} size="sm" mr={1} />
+                    {user && (
+                        <Button variant="ghost" mr={2} onClick={() => signout()}>
+                            Log Out
+                        </Button>
+                    )}
+                    <Avatar src={user?.photoUrl} size="sm" mr={1} />
                 </Flex>
             </Flex>
             <Flex
