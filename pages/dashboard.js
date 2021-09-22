@@ -8,11 +8,11 @@ import fetcher from '@/utils/fetcher';
 import SiteTable from '@/components/SiteTable';
 import SiteTableSkeleton from '@/components/SiteTableSkeleton';
 import { useAuth } from '@/lib/auth';
-import useSWR from 'swr'
+import useSWR from 'swr';
 
 export default function Dashboard() {
-    const auth = useAuth();
-    const { data } = useSWR('/api/sites', fetcher);
+    const { user } = useAuth();
+    const { data } = useSWR(user ? ['/api/sites', user.token] : null, fetcher);
 
     if (!data) {
         return (
@@ -27,4 +27,4 @@ export default function Dashboard() {
             {data.sites ? <SiteTable sites={data.sites} /> : <EmptyState />}
         </DashboardShell>
     );
-};
+}
