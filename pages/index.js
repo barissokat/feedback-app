@@ -1,9 +1,8 @@
 import Head from 'next/head';
-import Image from 'next/image';
 import styles from '@/styles/Home.module.css';
-import { Box, Button, Icon, Link, Text } from '@chakra-ui/react';
+import { Box, Button, Icon, Link, Text, HStack } from '@chakra-ui/react';
+import { FaGithub, FaGoogle } from 'react-icons/fa';
 
-import { auth } from 'firebase/app';
 import { useAuth } from '@/lib/auth';
 
 export default function Home() {
@@ -37,7 +36,7 @@ export default function Home() {
                         d="M 100, 100 m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0"
                     />
                 </Icon>
-                <Text>
+                <Text mb={2}>
                     {auth.user ? (
                         <Link href="/dashboard">{auth.user.name}</Link>
                     ) : (
@@ -55,14 +54,27 @@ export default function Home() {
                             Sign Out
                         </Button>
                     ) : (
-                        <Button
-                            onClick={(e) => auth.signinWithGitHub()}
-                            size="xs"
-                            w="100%"
-                            variant="link"
-                        >
-                            Sign In
-                        </Button>
+                        <HStack>
+                            <Button
+                                leftIcon={<FaGithub />}
+                                onClick={(e) => auth.signinWithGitHub()}
+                                size="xs"
+                                w="100%"
+                                variant="link"
+                                mr={2}
+                            >
+                                Sign in with GitHub
+                            </Button>
+                            <Button
+                                leftIcon={<FaGoogle />}
+                                onClick={(e) => auth.signinWithGoogle()}
+                                size="xs"
+                                w="100%"
+                                variant="link"
+                            >
+                                Sign in with Google
+                            </Button>
+                        </HStack>
                     )}
                 </Box>
             </main>
