@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { useRouter } from 'next/router';
-import { Box, FormControl, FormLabel, Input, Button, Link } from '@chakra-ui/react';
+import { Box, FormControl, FormLabel, Input, Button } from '@chakra-ui/react';
 
 import Feedback from '@/components/Feedback';
 import { useAuth } from '@/lib/auth';
@@ -29,7 +29,7 @@ export async function getStaticPaths() {
 
     return {
         paths,
-        fallback: false
+        fallback: true
     };
 }
 
@@ -54,7 +54,7 @@ const FeedbackPage = ({ initialFeedback }) => {
 
         setAllFeedback([newFeedback, ...allFeedback]);
         createFeedback(newFeedback);
-        document.getElementById("site-feedback-form").reset();
+        document.getElementById('site-feedback-form').reset();
     };
 
     return (
@@ -74,15 +74,21 @@ const FeedbackPage = ({ initialFeedback }) => {
                             id="comment"
                             placeholder="Leave a comment"
                         />
-                        <Button mt={4} mr={4} type="submit" fontWeight="medium">
+                        <Button
+                            mt={4}
+                            type="submit"
+                            fontWeight="medium"
+                            isDisabled={router.isFallback}
+                        >
                             Add Comment
                         </Button>
                     </FormControl>
                 </Box>
             )}
-            {allFeedback.map((feedback) => (
-                <Feedback key={feedback.id} {...feedback} />
-            ))}
+            {allFeedback &&
+                allFeedback.map((feedback) => (
+                    <Feedback key={feedback.id} {...feedback} />
+                ))}
         </Box>
     );
 };
