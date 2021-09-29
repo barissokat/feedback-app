@@ -4,8 +4,24 @@ import { Box, Button, Icon, Link, Text, HStack } from '@chakra-ui/react';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
 
 import { useAuth } from '@/lib/auth';
+import { getAllFeedback } from '@/lib/db-admin';
+import Feedback from '@/components/Feedback';
+import FeedbackLink from '@/components/FeedbackLink';
 
-export default function Home() {
+const SITE_ID = 'N1R4eQVEqcC0NuSpJHmm';
+
+export async function getStaticProps(context) {
+    const { feedback } = await getAllFeedback(SITE_ID);
+
+    return {
+        props: {
+            allFeedback: feedback
+        },
+        revalidate: 1
+    };
+}
+
+export default function Home({ allFeedback }) {
     const auth = useAuth();
 
     return (
@@ -76,6 +92,19 @@ export default function Home() {
                             </Button>
                         </HStack>
                     )}
+                </Box>
+                <Box
+                    display="flex"
+                    flexDirection="column"
+                    width="full"
+                    maxWidth="700px"
+                    margin="0 auto"
+                    mt={8}
+                >
+                    <FeedbackLink siteId={SITE_ID} />
+                    {allFeedback.map((feedback) => (
+                        <Feedback key={feedback.id} {...feedback} />
+                    ))}
                 </Box>
             </main>
         </div>
