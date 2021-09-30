@@ -13,8 +13,7 @@ const FeedbackTable = (props) => {
                     <Th>Feedback</Th>
                     <Th>Route</Th>
                     <Th>Visible</Th>
-                    {/* <Th width="50px">{''}</Th> */}
-                    <Th width="50px">Actions</Th>
+                    <Th width="50px">{''}</Th>
                 </Tr>
             </thead>
             <tbody>
