@@ -36,7 +36,6 @@ export default function Home({ allFeedback }) {
                             `
                     }}
                 />
-                <title>Feedback App</title>
             </Head>
 
             <main className={styles.main}>

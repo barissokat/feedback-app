@@ -17,7 +17,6 @@ import {
 
 import { useAuth } from '@/lib/auth';
 import { goToBillingPortal } from '@/lib/db';
-import Page from '@/components/Page';
 import DashboardShell from '@/components/DashboardShell';
 
 const FeedbackUsage = () => (
