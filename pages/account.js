@@ -18,6 +18,7 @@ import {
 import { useAuth } from '@/lib/auth';
 import { goToBillingPortal } from '@/lib/db';
 import DashboardShell from '@/components/DashboardShell';
+import Page from '@/components/Page';
 
 const FeedbackUsage = () => (
     <StatGroup>
