@@ -48,13 +48,11 @@ const DashboardShell = ({ children }) => {
                 </Flex>
                 <Flex alignItems="center">
                     {user && (
-                        <Button
-                            variant="ghost"
-                            mr={2}
-                            onClick={() => signout()}
-                        >
-                            Log Out
-                        </Button>
+                        <NextLink href="/account" passHref>
+                            <Button as="a" variant="ghost" mr={2}>
+                                Account
+                            </Button>
+                        </NextLink>
                     )}
                     <Avatar src={user?.photoUrl} size="sm" mr={1} />
                 </Flex>
